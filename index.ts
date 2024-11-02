@@ -29,9 +29,20 @@ export interface FileInfo {
     type: string
 }
 
+export interface SignedURLOptions {
+    signedUrl: string,
+    objectUrl: string,
+    filename: string,
+    folder: string,
+    expiresIn: number,
+    mimeType: string,
+    size: number,
+    originalName: string,
+}
+
 export interface SuccessCallbacks {
-    signedURLCreated: (url: string, filename: string, folder: string, expiresIn: number) => Promise<void>
-    fileUploaded: (url: string, filename: string) => Promise<boolean>
+    signedURLCreated: (options: SignedURLOptions) => Promise<void>
+    fileUploaded: (filename: string) => Promise<boolean>
 }
 
 export class EasyS3Client {
@@ -77,7 +88,7 @@ export class EasyS3Client {
 
     async validate(formData: FormData, options: UploadOptions): Promise<boolean> {
         const fileName = formData.get("filename") as string
-        return options.successCallbacks.fileUploaded(`${this.endpoint}/${options.bucket}/${options.folder}/${fileName}`, fileName)
+        return options.successCallbacks.fileUploaded(fileName)
     }
 
     private async generateSignedURL(
@@ -117,13 +128,24 @@ export class EasyS3Client {
             expiresIn: options.expires,
         })
 
-        await options.successCallbacks.signedURLCreated(signedURL, fileName, options.folder, options.expires)
+        const objectUrl = `${this.endpoint}/${options.bucket}/${options.folder}/${fileName}`
+
+        await options.successCallbacks.signedURLCreated({
+            objectUrl: objectUrl,
+            filename: fileName,
+            mimeType: file.type,
+            size: file.size,
+            expiresIn: options.expires,
+            folder: options.folder,
+            signedUrl: signedURL,
+            originalName: file.name
+        })
 
         return {
             success: true,
             data: signedURL,
             error: undefined,
-            url: `${this.endpoint}/${options.bucket}/${options.folder}/${fileName}`,
+            url: objectUrl,
             filename: fileName,
         }
     }
