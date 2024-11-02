@@ -1,0 +1,32 @@
+{
+  "name": "next-easy-s3-upload",
+  "type": "module",
+  "version": "1.0.19",
+  "description": "Simple Next.js S3 Upload using Server actions",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "package.json",
+    "README.md"
+  ],
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/crypto-js": "^4.2.2",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "typescript": "^5.0.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.682.0",
+    "@aws-sdk/s3-request-presigner": "^3.682.0",
+    "axios": "^1.7.7",
+    "crypto-js": "^4.2.0"
+  },
+  "scripts": {
+    "build": "tsc"
+  }
+}
