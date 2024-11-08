@@ -128,7 +128,7 @@ export class EasyS3Client {
             expiresIn: options.expires,
         })
 
-        const objectUrl = `${this.endpoint}/${options.bucket}/${options.folder}/${fileName}`
+        const objectUrl = `${this.endpoint}/${options.bucket}/${options.folder}${fileName}`
 
         await options.successCallbacks.signedURLCreated({
             objectUrl: objectUrl,
