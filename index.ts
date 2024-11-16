@@ -158,7 +158,7 @@ const computeSHA256 = async (file: File) => {
 };
 
 
-export function useEasyS3Upload(action: (formData: FormData) => Promise<S3Result>, onSuccess?: (url: string) => void, onSuccessServer?: (formData: FormData) => Promise<boolean>) {
+export function useEasyS3Upload(action: (formData: FormData) => Promise<S3Result>, onSuccess?: (url: string, file_id: string) => void, onSuccessServer?: (formData: FormData) => Promise<boolean>) {
     const [error, setError] = useState<string>("")
     const [isUploading, setIsUploading] = useState<boolean>(false)
     const [progress, setProgress] = useState<number>(0)
@@ -219,7 +219,7 @@ export function useEasyS3Upload(action: (formData: FormData) => Promise<S3Result
                 }
             }
             if (onSuccess) {
-                onSuccess(result.url)
+                onSuccess(result.url, result.filename)
             }
         }
 
