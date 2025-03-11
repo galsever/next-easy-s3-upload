@@ -3,7 +3,7 @@
   "author": "sever",
   "homepage": "https://github.com/galsever/next-easy-s3-upload/",
   "type": "module",
-  "version": "1.0.25",
+  "version": "1.0.26",
   "description": "Simple Next.js S3 Upload using Server actions",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
